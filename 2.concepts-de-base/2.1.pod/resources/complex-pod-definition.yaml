@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-complex-pod
+  labels:
+    app: my-complex-app
+    tier: backend
+spec:
+  securityContext:
+    runAsUser: 1001
+  intContainers:
+  - name: c1 
+    image: busybox:1.28
+    command: ["sleep", "3200"]
+  containers:
+    - name: my-container
+      image: nginx:1.16
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "50Mi"
+        limits:
+          cpu: "200m"
+          memory: "100Mi"
+      volumeMounts:
+      - name: tmp
+        mountPath: /test-path/tmp
+      - name: from-hostpath
+        mountPath: /test-path2/gogo
+      - name: from-vpc
+        mountPath: /test-path3/config
+      securityContext:
+        runAsUser: 1000
+        capabilities:
+          add: ["SYS_TIME"]
+      env:
+      - name: MY_ENV1
+        value: "value1"
+      - name: MY_ENV2
+        valueFrom:
+          configMapKeyRef:
+            key: env2
+            name: my-configmap1
+      - name: MY_ENV3
+        valueFrom:
+          secretKeyRef:
+            key: pwd
+            name: my-secret-password
+  volumes:
+  - name: tmp
+    emptyDir: {}
+  - name: from-hostpath
+    hostPath:
+      path: /etc/my-dir
+      type: DirectoryOrCreate
+  - name: from-vpc
+    persistentVolumeClaim:
+      claimName: my-claim
