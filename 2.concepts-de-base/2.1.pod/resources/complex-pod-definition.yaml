@@ -23,6 +23,11 @@ spec:
             operator: In
             values:
             - ssd
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "master"
+    effect: "NoSchedule"
   securityContext:
     runAsUser: 1001
   intContainers:
@@ -39,6 +44,12 @@ spec:
         limits:
           cpu: "200m"
           memory: "100Mi"
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 80
+        initialDelaySeconds: 3
+        periodSeconds: 3
       volumeMounts:
       - name: tmp
         mountPath: /test-path/tmp
