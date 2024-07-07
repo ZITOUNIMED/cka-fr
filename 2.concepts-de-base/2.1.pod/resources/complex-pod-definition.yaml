@@ -50,6 +50,12 @@ spec:
           port: 80
         initialDelaySeconds: 3
         periodSeconds: 3
+      readinessProbe:
+        httpGet:
+          path: /ready
+          port: 80
+        initialDelaySeconds: 3
+        periodSeconds: 3
       volumeMounts:
       - name: tmp
         mountPath: /test-path/tmp
