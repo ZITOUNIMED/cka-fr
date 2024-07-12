@@ -50,40 +50,39 @@
 Il y a trois façons pour mettre à l'échelle une "ReplicaSet"
 1. modifier le nombre des "replicas" dans le fichier de définition YAML.
  ```
-    apiVersion: apps/v1
-    kind: ReplicaSet
-    metadata:
-      name: myapp-replicaset
-      labels:
-        app: myapp
-        type: front-end
-    spec:
-     template:
-        metadata:
-          name: myapp-pod
-          labels:
-            app: myapp
-            type: front-end
-        spec:
-         containers:
-         - name: nginx-container
-           image: nginx
-     replicas: 6
-     selector:
-       matchLabels:
-        type: front-end
+   apiVersion: apps/v1
+       kind: ReplicaSet
+       metadata:
+         name: demo-replicaset
+         labels:
+           app: webapp
+       spec:
+        template:
+           metadata:
+             name: webapp
+             labels:
+               app: webapp
+               tier: frontend
+           spec:
+            containers:
+            - name: nginx
+              image: nginx
+        replicas: 6
+        selector:
+          matchLabels:
+           tier: frontend
 ```
 
   ```
-  $ kubectl apply -f replicaset-definition.yaml
+  $ kubectl apply -f demo-replicaset-definition.yaml
   ```
 2. Deuxième façon c'est d'utiliser la commande **`kubectl scale`** et avec le nom du fichier de définition.
   ```
-  $ kubectl scale --replicas=6 -f replicaset-definition.yaml
+  $ kubectl scale --replicas=6 -f demo-replicaset-definition.yaml
   ```
 3. Troixième façon c'est d'utiliser la commande **`kubectl scale`** avec le nom de la "ReplicaSet".
   ```
-  $ kubectl scale --replicas=6 replicaset myapp-replicaset
+  $ kubectl scale --replicas=6 replicaset demo-replicaset
   ```
   ![rs2](../../images/rs2.PNG)
 

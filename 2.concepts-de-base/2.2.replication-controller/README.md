@@ -26,11 +26,11 @@
     ```
     $ kubectl create -f demo-rc-definition.yaml
     ```
-  - Afficher toutes les "replication controllers"
+  - Lister toutes les "replication controllers"
     ```
     $ kubectl get replicationcontroller
     ```
-  - Afficher tous les "pods" lancés par la "replication controller"
+  - Lister tous les "pods" lancés par la "replication controller"
     ```
     $ kubectl get pods
     ```
