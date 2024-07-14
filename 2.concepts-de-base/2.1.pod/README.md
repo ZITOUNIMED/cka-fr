@@ -54,5 +54,6 @@ $ kubectl get pods
 Un pod peut contenir plusiurs pods et une configuration plus complexe pour spécifier les volumes, les contexts de sécurité, les demandes des resources, les sélecteurs des nodes, les classes de priorité, etc. Nous verrons toutes ces notions lorsque nous avancerons dans ce cours.
 
 ```
-$ k create -f cpmplex-pod-definition.yaml
+$ kubectl create -f complex-pod-definition.yaml
+$ kubectl describe pod my-complex-pod
 ```
